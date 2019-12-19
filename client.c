@@ -13,12 +13,9 @@ int main()
     struct sockaddr_in myAddr;
     int errConnect = 0;	
     sockfd = socket(AF_INET , SOCK_STREAM , 0);
-    if (sockfd == -1){
+    if (sockfd == -1)
         printf("create a socket error");
-    }
-
     memset(&myAddr,'\0',sizeof(myAddr));
-  
     myAddr.sin_family = PF_INET;
     myAddr.sin_addr.s_addr = inet_addr("127.0.0.1");//localhost
     myAddr.sin_port = htons(1212);//port
@@ -28,30 +25,22 @@ int main()
         return 1;
     }
     else
-		printf("Connect to server.\n");
-
-
-    while(1)
-    { 
+	printf("Connect to server.\n");
+    while(1){ 
 		char message[1024] = {};
 		char receiveMessage[1024] = {};
 		printf("Enter your message : ");
 		scanf("%s",message);
-		
-		if(message[0] == 'e' && message[1] == 'x' && message[2] == 'i' && message[3] =='t')
-		{
+		if(message[0] == 'e' && message[1] == 'x' && message[2] == 'i' && message[3] =='t'){
 			close(sockfd);
 			printf("close Socket\n");
 			exit(1);
 		}
-		else
-		{
+		else{
 			send(sockfd,message,sizeof(message),0);
 			recv(sockfd,receiveMessage,sizeof(receiveMessage),0);
 			printf("[SERVER read] %s \n",receiveMessage);  
-		}
-		
-
+		}	
 	}
     return 0;
 }
